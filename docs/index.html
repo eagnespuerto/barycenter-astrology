@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Barycenterology · Astrology of the Barycenter</title>
+<meta name="description" content="The Solar System's barycenter moves in and out of the Sun. See when — and what happened on Earth, from 1800 to 2200." />
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9' fill='%23f5c26b'/><circle cx='16' cy='9' r='2' fill='%233b1f66'/></svg>" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<header class="hero">
+  <div class="hero-mark" aria-hidden="true">
+    <svg viewBox="0 0 200 200" width="140" height="140">
+      <defs>
+        <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#fff2cf"/>
+          <stop offset="60%" stop-color="#f5c26b"/>
+          <stop offset="100%" stop-color="#c2761c" stop-opacity="0.9"/>
+        </radialGradient>
+        <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#f5c26b" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#f5c26b" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="90" fill="url(#halo)"/>
+      <g class="orbit-ring" stroke="#e7d9b4" stroke-opacity="0.35" fill="none" stroke-dasharray="2 4">
+        <circle cx="100" cy="100" r="70"/>
+        <circle cx="100" cy="100" r="55"/>
+      </g>
+      <circle cx="100" cy="100" r="42" fill="url(#sunGrad)"/>
+      <circle id="hero-bary" cx="132" cy="88" r="4.5" fill="#3b1f66" stroke="#fff" stroke-width="1"/>
+      <g stroke="#f5c26b" stroke-opacity="0.6">
+        <line x1="100" y1="5"  x2="100" y2="20"/>
+        <line x1="100" y1="180" x2="100" y2="195"/>
+        <line x1="5"   y1="100" x2="20"  y2="100"/>
+        <line x1="180" y1="100" x2="195" y2="100"/>
+      </g>
+    </svg>
+  </div>
+  <h1>Barycenterology</h1>
+  <p class="subtitle">Astrology of the Barycenter · 1800 – 2200</p>
+  <p class="lede">
+    The Solar System's true center of mass is not the Sun. It drifts — sometimes inside the Sun's fiery body, sometimes far outside. This site asks a small, unscientific, luminous question: <em>does the sky notice?</em>
+  </p>
+  <a class="down" href="#chart" aria-label="Scroll to chart">↓</a>
+</header>
+
+<main>
+
+<section id="legend" class="panel legend">
+  <div class="legend-row">
+    <span class="dot in"></span> <strong>Inside the Sun</strong> — the light phase
+  </div>
+  <div class="legend-row">
+    <span class="dot out"></span> <strong>Outside the Sun</strong> — the shadow phase
+  </div>
+  <div class="legend-row">
+    <span class="dot eq"></span> <strong>Equilibrium</strong> — the barycenter meets the Sun's center
+  </div>
+  <p class="legend-note" id="stats">Loading barycenter positions…</p>
+</section>
+
+<section id="chart" class="panel">
+  <h2>The dance of the barycenter</h2>
+  <p>
+    Distance from the Sun's <em>center</em> to the Solar System's <em>center of mass</em>, in solar radii. Above the golden line, the barycenter lies outside the Sun; below, it burns within.
+  </p>
+  <div class="chart-wrap">
+    <svg id="chart-svg" viewBox="0 0 1000 380" preserveAspectRatio="none" role="img" aria-label="Barycenter distance chart 1800 to 2200"></svg>
+    <div id="tooltip" class="tooltip" hidden></div>
+  </div>
+  <div class="chart-controls">
+    <label class="range">
+      <span>Year</span>
+      <input id="year-slider" type="range" min="1800" max="2200" step="1" value="2026" />
+      <span class="year-out" id="year-out">2026</span>
+    </label>
+  </div>
+</section>
+
+<section id="orrery" class="panel orrery-panel">
+  <h2>The moment, drawn</h2>
+  <p class="mini">The circle is the Sun. The violet point is the barycenter at the selected year.</p>
+  <div class="orrery-wrap">
+    <svg id="orrery" viewBox="-3 -3 6 6" role="img" aria-label="Barycenter position relative to Sun"></svg>
+    <div class="orrery-read">
+      <div><span class="k">Year</span><span class="v" id="or-year">—</span></div>
+      <div><span class="k">Distance</span><span class="v" id="or-dist">—</span></div>
+      <div><span class="k">Phase</span><span class="v" id="or-phase">—</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline" class="panel">
+  <h2>What happened on Earth</h2>
+  <p>
+    A hand-picked timeline of world events (sourced from Wikipedia). The shadow phase is loud with wars, pandemics, and crises; the light phase is quieter, more often marked by treaties, discovery, and repair. Correlation is not causation — read it as a mirror, not a mechanism.
+  </p>
+  <div class="filters">
+    <button class="chip active" data-filter="all">All</button>
+    <button class="chip" data-filter="bad">Shadow</button>
+    <button class="chip" data-filter="good">Light</button>
+    <button class="chip" data-filter="equilibrium">Equilibrium</button>
+  </div>
+  <ol id="events" class="events"></ol>
+</section>
+
+<section id="method" class="panel">
+  <h2>How the numbers were made</h2>
+  <p>
+    Barycenter positions come from NASA JPL's <a href="https://naif.jpl.nasa.gov/naif/data.html" target="_blank" rel="noopener">DE440 planetary ephemeris</a>, sampled monthly from January 1800 to December 2200 with <a href="https://rhodesmill.org/skyfield/" target="_blank" rel="noopener">Skyfield</a>. The distance shown is |Sun − Solar&nbsp;System&nbsp;Barycenter|, expressed in solar radii (R<sub>☉</sub> = 695,700 km).
+  </p>
+  <p>
+    Calculation and visualization approach adapted from <strong>Lavender Elle Hanson</strong>'s notebook <em>Solar System Barycenter Calculations</em>. Her stats — barycenter inside the Sun ~38.25 % of the time, within half a solar radius ~6.67 % of the time — are reproduced here almost exactly.
+  </p>
+  <p class="caveat">
+    Nothing on this page is a scientific claim about human affairs. Barycenterology is a poetic frame — a way of noticing that the ground beneath us is, in the largest sense, always in motion.
+  </p>
+</section>
+
+<footer>
+  <p>
+    Built with love and gravitation · <a href="https://github.com/eagnespuerto/barycenter-astrology" target="_blank" rel="noopener">source on GitHub</a> · MIT license
+  </p>
+  <p class="tiny">
+    Astronomy adapted from <em>Solar System Barycenter Calculations</em> by Lavender Elle Hanson. Events referenced from Wikipedia.
+  </p>
+</footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
