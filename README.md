@@ -1,5 +1,11 @@
 # Barycenterology · Astrology of the Barycenter
 
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![made with](https://img.shields.io/badge/made%20with-Python-3776AB?logo=python&logoColor=white)](https://github.com/eagnespuerto/barycenter-astrology)
+[![website](https://img.shields.io/badge/website-live-brightgreen)](https://eagnespuerto.github.io/barycenter-astrology/)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-support%20me-FF5E5B?logo=kofi&logoColor=white)](https://ko-fi.com/eagnespuerto)
+[![Linktree](https://img.shields.io/badge/Linktree-soitsagnes-43E55E?logo=linktree&logoColor=white)](https://linktr.ee/soitsagnes)
+
 A static, mobile-friendly site that watches the Solar System's true center of mass
 drift in and out of the Sun, from **1800 to 2200**, and lays that dance beside
 notable world events — framed as shadow (barycenter outside the Sun) and light
